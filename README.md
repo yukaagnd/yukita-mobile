@@ -30,8 +30,7 @@ Terakhir, tambahkan kode berikut pada main.dart.
 ```
 * ### Membuat Tombol Sederhana
 Pada `menu.dart` tambahkan 
-
-
+```
 class MyHomePage extends StatelessWidget {
     MyHomePage({super.key});
     final String npm = '23061657704'; // NPM
@@ -217,7 +216,7 @@ class ItemCard extends StatelessWidget {
   }
   
 }
-
+```
 Dengan begitu, selesai sudah pembuatan proyek Flutter baru. Jangan lupa untul menjalankan proyek menggunakan Google Chrome dengan perintah berikut ini
 ```
 flutter run
