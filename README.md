@@ -240,4 +240,4 @@ Fungsi setState() digunakan dalam stateful widget untuk memberi tahu framework b
 
 Kata kunci const dan final di Flutter digunakan untuk mendeklarasikan variabel yang nilainya bersifat tetap. Namun, const membuat nilai variabel tersebut konstan pada waktu kompilasi (compile-time) dan berlaku secara immutabel di seluruh aplikasi. Dengan kata lain, objek const sepenuhnya tetap dan tidak dapat diubah kapan pun. Sementara itu, final menentukan variabel yang nilainya tetap setelah diinisialisasi, namun penentuan nilai tersebut bisa dilakukan pada waktu runtime (run-time). Hal ini memungkinkan variabel final dipakai untuk nilai yang tetap tetapi hanya diketahui setelah aplikasi berjalan.
 
-<\details>
+</details>
