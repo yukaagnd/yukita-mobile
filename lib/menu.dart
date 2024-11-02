@@ -6,10 +6,10 @@ class MyHomePage extends StatelessWidget {
     final String name = 'Gnade Yuka'; // Nama
     final String className = 'PBP B'; // Kelas
     final List<ItemHomepage> items = [
-         ItemHomepage("Lihat Mood", Icons.mood),
-         ItemHomepage("Tambah Mood", Icons.add),
-         ItemHomepage("Logout", Icons.logout),
-     ];
+      ItemHomepage("Lihat Daftar Produk", Icons.shopping_bag, Colors.brown[700]!), // Dark brown
+      ItemHomepage("Tambah Produk", Icons.add, Colors.brown[500]!),                 // Medium brown
+      ItemHomepage("Logout", Icons.logout, Colors.brown[300]!),                     // Light cream
+    ];
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         // Judul aplikasi "Mental Health Tracker" dengan teks putih dan tebal.
         title: const Text(
-          'Mental Health Tracker',
+          'YuKita',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -58,7 +58,7 @@ class MyHomePage extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.only(top: 16.0),
                     child: Text(
-                      'Welcome to Mental Health Tracker',
+                      'Welcome to YuKita',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,
@@ -127,8 +127,9 @@ class InfoCard extends StatelessWidget {
 class ItemHomepage {
      final String name;
      final IconData icon;
+     final Color color;
 
-     ItemHomepage(this.name, this.icon);
+     ItemHomepage(this.name, this.icon, this.color);
 }
 
 class ItemCard extends StatelessWidget {
@@ -142,7 +143,7 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       // Menentukan warna latar belakang dari tema aplikasi.
-      color: Theme.of(context).colorScheme.secondary,
+      color: item.color,
       // Membuat sudut kartu melengkung.
       borderRadius: BorderRadius.circular(12),
       
