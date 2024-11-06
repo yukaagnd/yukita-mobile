@@ -241,3 +241,27 @@ Fungsi setState() digunakan dalam stateful widget untuk memberi tahu framework b
 Kata kunci const dan final di Flutter digunakan untuk mendeklarasikan variabel yang nilainya bersifat tetap. Namun, const membuat nilai variabel tersebut konstan pada waktu kompilasi (compile-time) dan berlaku secara immutabel di seluruh aplikasi. Dengan kata lain, objek const sepenuhnya tetap dan tidak dapat diubah kapan pun. Sementara itu, final menentukan variabel yang nilainya tetap setelah diinisialisasi, namun penentuan nilai tersebut bisa dilakukan pada waktu runtime (run-time). Hal ini memungkinkan variabel final dipakai untuk nilai yang tetap tetapi hanya diketahui setelah aplikasi berjalan.
 
 </details>
+
+## **Penjelasan Tugas**
+
+<details>
+<summary> <b> Tugas 8: Flutter Navigation, Layouts, Forms, and Input Elements </b> </summary>
+
+## **Implementasi Checklist**
+
+* ### 
+
+## **Jawaban Tugas 8**
+
+* ### Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
+
+* ### Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
+
+* ### Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
+
+* ### Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+
+* ### Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
+
+
+</details>
