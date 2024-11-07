@@ -25,8 +25,16 @@ class ItemCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         // Aksi ketika kartu ditekan.
-        onTap: () {
-          // Menampilkan pesan SnackBar saat kartu ditekan.
+        onTap: (){ 
+        if (item.name == "Tambah Produk") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ItemFormPage(), // Directing to the ItemFormPage
+            ),
+          );
+        } // Menampilkan pesan SnackBar saat kartu ditekan.
+        else {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
@@ -36,7 +44,7 @@ class ItemCard extends StatelessWidget {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => const ItemFormPage()));
           }
-        },
+        }},
         // Container untuk menyimpan Icon dan Text
         child: Container(
           padding: const EdgeInsets.all(8),

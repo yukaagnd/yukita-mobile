@@ -249,19 +249,291 @@ Kata kunci const dan final di Flutter digunakan untuk mendeklarasikan variabel y
 
 ## **Implementasi Checklist**
 
-* ### 
+* ### Membuat halaman tambah formulir
+
+Buat berkas baru pada direktori lib dengan nama items_form.dart. Lalu saya tambahkan kode berikut ke dalam berkas items_form.dart
+
+```
+import 'package:flutter/material.dart';
+import 'package:yukita/widgets/left_drawer.dart';
+
+class ItemFormPage extends StatefulWidget {
+  const ItemFormPage({super.key});
+
+  @override
+  State<ItemFormPage> createState() => _ItemFormPageState();
+}
+
+class _ItemFormPageState extends State<ItemFormPage> {
+  final _formKey = GlobalKey<FormState>();
+  String _name = "";
+  int _amount = 0;
+  String _description = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text('Add Item Form'),
+        ),
+        backgroundColor: Colors.brown.shade400,
+        foregroundColor: Colors.white,
+      ),
+      drawer: const LeftDrawer(),
+      body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Product Name",
+                        labelText: "Product Name",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                      ),
+                      onChanged: (String? value) {
+                        setState(() {
+                          _name = value!;
+                        });
+                      },
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "Name can't be empty!";
+                        }
+                        return null;
+                      })),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Amount",
+                        labelText: "Amount",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                      ),
+                      onChanged: (String? value) {
+                        setState(() {
+                          _amount = int.parse(value!);
+                        });
+                      },
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "Amount can't be empty!";
+                        }
+                        if (int.tryParse(value) == null) {
+                          return "Amount has to be an integer!";
+                        }
+                        return null;
+                      })),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Description",
+                        labelText: "Description",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
+                      ),
+                      onChanged: (String? value) {
+                        setState(() {
+                          _description = value!;
+                        });
+                      },
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "Description can't be empty!";
+                        }
+                        return null;
+                      })),
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all( Colors.brown.shade400),
+                          ),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                        title: const Text("Your item is saved"),
+                                        content: SingleChildScrollView(
+                                            child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Item name: $_name"),
+                                            Text("Amount: $_amount"),
+                                            Text("Description: $_description")
+                                          ],
+                                        )),
+                                        actions: [
+                                          TextButton(
+                                            child: const Text("OK"),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          )
+                                        ]);
+                                  });
+                              _formKey.currentState!.reset();
+                            }
+                          },
+                          child: const Text(
+                            "Save",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+Lalu, saya mengarahkan pengguna ke halaman form ketika menekan tombol Tambah Produk pada halaman utama. Saya menambahkan kode berikut ini pada fungsi onTap() di berkas lib/widgets/item_card.dart
+
+```
+onTap: ()
+        if (item.name == "Tambah Produk") {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ItemFormPage(), // Directing to the ItemFormPage
+            ),
+          );
+        }
+```
+
+* ### Membuat sebuah drawer pada aplikasi 
+
+Buat berkas baru left_drawer.dart pada folder lib/widgets dan saya tambahkan kode dibawah ini.
+
+```
+import 'package:flutter/material.dart';
+import 'package:yukita/screens/items_form.dart';
+import 'package:yukita/screens/menu.dart';
+
+class LeftDrawer extends StatelessWidget {
+  const LeftDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF4E342E),
+              ),
+              child: Column(children: [
+                Text(
+                  'YuKita',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Padding(padding: EdgeInsets.all(10)),
+                Text("Simpan kegiatan belanjamu di sini!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ))
+              ])),
+          ListTile(
+              leading: const Icon(Icons.home_outlined),
+              title: const Text("Halaman Utama"),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyHomePage(),
+                    ));
+              }),
+          ListTile(
+              leading: const Icon(Icons.format_list_bulleted_add),
+              title: const Text("Tambah Item"),
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ItemFormPage(),
+                    ));
+              })
+        ],
+      ),
+    );
+  }
+}
+```
 
 ## **Jawaban Tugas 8**
 
 * ### Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
 
+Const digunakan untuk menetapkan nilai yang konstan dan tidak berubah di Flutter, artinya nilai atau widget ini akan tetap sama setiap kali aplikasi dijalankan atau diperbarui. Dengan menggunakan const, kita memberi tahu Flutter bahwa widget ini bersifat statis dan tidak perlu di-render ulang setiap kali widget lainnya berubah.
+
+Menggunakan const dapat meningkatkan performa aplikasi dengan mengurangi kerja rebuild pada widget yang tidak perlu diperbarui. Hal ini membantu dalam efisiensi penggunaan memori karena objek konstan hanya dibuat satu kali.
+
+Gunakan const saat kita tahu nilai atau widget tersebut tidak akan berubah selama aplikasi berjalan. Misalnya, teks yang tidak bergantung pada state atau widget statis.
+
+Jika suatu widget memiliki nilai atau properti yang bisa berubah (tergantung state), kita tidak perlu menggunakan const, karena widget tersebut akan memerlukan pembaruan atau perhitungan ulang.
+
 * ### Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
+
+Column : Digunakan untuk menyusun widget secara vertikal (dari atas ke bawah). Biasanya digunakan saat kita ingin menempatkan beberapa widget di atas satu sama lain.
+Contoh : 
+```
+Column(
+  children: [
+    Text('Judul'),
+    Text('Deskripsi'),
+    ElevatedButton(onPressed: () {}, child: Text('Tombol'))
+  ],
+);
+```
+Row : Digunakan untuk menyusun widget secara horizontal (dari kiri ke kanan). Ini berguna saat kita ingin beberapa elemen berada dalam satu baris.
+Contoh :
+```
+Row(
+  children: [
+    Icon(Icons.star),
+    Text('Rating'),
+    ElevatedButton(onPressed: () {}, child: Text('Beri Rating'))
+  ],
+);
+```
 
 * ### Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
 
+Pada halaman form ini, elemen input yang digunakan meliputi TextFormField untuk memasukkan Product Name, Amount, dan Description. TextFormField adalah elemen input dasar di Flutter yang sering digunakan untuk menerima input teks dan memungkinkan validasi.
+
+Elemen input lain yang tersedia di Flutter tetapi tidak digunakan pada tugas ini termasuk DropdownButton, Slider, Switch, Checkbox, dan Radio. Misalnya, DropdownButton berguna untuk memilih opsi dari daftar, sedangkan Switch digunakan untuk opsi biner (misalnya, on atau off).
+
 * ### Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+
+Tema aplikasi Flutter diatur melalui ThemeData dalam properti theme di MaterialApp. Ini bisa meliputi warna utama (primaryColor), warna sekunder, font, ikon, dan lain-lain. Tema ini akan diterapkan secara konsisten ke seluruh aplikasi.
+
+Pada kode yang saya, sudah diimplementasikan tema dengan ThemeData pada MaterialApp, yang mengatur skema warna aplikasi menggunakan warna coklat sebagai warna utama.
 
 * ### Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
 
+Flutter menyediakan Navigator untuk menangani navigasi antar halaman. Metode seperti Navigator.push digunakan untuk mendorong halaman baru ke dalam stack navigasi, sementara Navigator.pop untuk menghapus halaman terakhir. Dalam kode yang diberikan, navigasi digunakan dengan Navigator.pushReplacement untuk mengganti halaman saat ini dengan halaman baru, sehingga pengguna tidak bisa kembali ke halaman sebelumnya.
 
 </details>
