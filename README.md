@@ -242,8 +242,6 @@ Kata kunci const dan final di Flutter digunakan untuk mendeklarasikan variabel y
 
 </details>
 
-## **Penjelasan Tugas**
-
 <details>
 <summary> <b> Tugas 8: Flutter Navigation, Layouts, Forms, and Input Elements </b> </summary>
 
@@ -535,5 +533,29 @@ Pada kode yang saya, sudah diimplementasikan tema dengan ThemeData pada Material
 * ### Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
 
 Flutter menyediakan Navigator untuk menangani navigasi antar halaman. Metode seperti Navigator.push digunakan untuk mendorong halaman baru ke dalam stack navigasi, sementara Navigator.pop untuk menghapus halaman terakhir. Dalam kode yang diberikan, navigasi digunakan dengan Navigator.pushReplacement untuk mengganti halaman saat ini dengan halaman baru, sehingga pengguna tidak bisa kembali ke halaman sebelumnya.
+
+</details>
+
+<details>
+<summary> <b> Tugas 9: Integrasi Layanan Web Django dengan Aplikasi Flutter </b> </summary>
+
+## **Implementasi Checklist**
+
+## **Jawaban Tugas 9**
+
+* ### Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
+Membuat model untuk pengambilan atau pengiriman data JSON penting untuk memastikan struktur data yang konsisten dan dapat dipahami oleh aplikasi, sehingga meminimalkan kesalahan parsing atau penanganan data. Tanpa model, akan lebih sulit mengelola data karena tipe data dan struktur yang tidak jelas, berpotensi menyebabkan error saat data diakses atau digunakan. Model juga mempermudah debugging dan pengembangan karena memberikan dokumentasi eksplisit tentang bagaimana data JSON seharusnya diterjemahkan dan digunakan.
+
+* ### Jelaskan fungsi dari library http yang sudah kamu implementasikan pada tugas ini
+Library http berfungsi sebagai alat untuk melakukan komunikasi antara aplikasi Flutter dan server melalui protokol HTTP. Dengan library ini, aplikasi dapat mengirim permintaan HTTP (seperti GET, POST, PUT, DELETE) dan menerima respons dari server. Library ini juga menyediakan metode untuk membaca, menulis, dan memproses data yang diterima, seperti menguraikan respons JSON untuk digunakan dalam aplikasi.
+
+* ### Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+CookieRequest berfungsi untuk menangani permintaan HTTP dengan manajemen sesi menggunakan cookie, sehingga memungkinkan pengguna tetap masuk (logged in) atau mempertahankan sesi autentikasi tanpa perlu mengulang login. Instance CookieRequest perlu dibagikan ke semua komponen di aplikasi Flutter untuk memastikan data sesi yang konsisten diakses di seluruh bagian aplikasi, terutama saat menangani operasi yang memerlukan status autentikasi seperti akses ke data sensitif atau halaman khusus pengguna.
+
+* ### Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+Pengguna memasukkan data melalui antarmuka Flutter yang dikirim ke server menggunakan HTTP POST atau PUT dalam format JSON. Server memproses data tersebut (misalnya, menyimpannya ke database) dan mengembalikan respons JSON yang relevan. Respons ini diterima oleh aplikasi Flutter melalui permintaan HTTP, diuraikan (parsing) menjadi model data, lalu ditampilkan di antarmuka pengguna melalui widget yang sesuai.
+
+* ### Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+Saat pengguna menginput data akun di Flutter untuk login atau register, data tersebut dikirimkan ke server Django melalui HTTP POST. Django memvalidasi data: pada login, memastikan kredensial cocok dengan database, dan pada register, memastikan akun baru dapat dibuat. Jika valid, Django mengembalikan respons sukses, termasuk token atau cookie sesi yang dikelola oleh Flutter (dengan CookieRequest). Untuk logout, permintaan HTTP dikirim ke Django untuk menghapus sesi atau token, dan aplikasi Flutter memperbarui antarmuka untuk mengarahkan pengguna kembali ke halaman login.
 
 </details>
