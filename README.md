@@ -541,6 +541,48 @@ Flutter menyediakan Navigator untuk menangani navigasi antar halaman. Metode sep
 
 ## **Implementasi Checklist**
 
+* ### Mengimplementasikan Fitur Login dan Integrasi Sistem Autentikasi Django dengan Flutter
+Dalam proyek ini, halaman login dibuat menggunakan Stateful Widget karena memiliki elemen yang dinamis, seperti form input untuk username dan password. Tombol pada halaman ini akan mengirimkan permintaan ke endpoint autentikasi Django (auth/login/) dengan data yang dimasukkan pengguna. Hasil autentikasi akan ditampilkan melalui snackbar, menunjukkan apakah login berhasil atau gagal. Jika berhasil, pengguna akan diarahkan ke halaman utama.
+
+Implementasi di Django
+
+- Saya membuat app baru bernama authentication, yang berisi fungsi-fungsi seperti login dan logout.
+- Endpoint ini berbeda dari login biasa karena mengembalikan JSON response sebagai hasil proses login/logout.
+- Routing ditambahkan untuk mengakses login di /auth/login dan logout di /auth/logout.
+- Saya menggunakan paket django-cors-headers untuk memungkinkan komunikasi antara Flutter dan Django, menambahkan pengaturan CORS di file konfigurasi Django.
+
+Implementasi di Flutter
+
+- Menambahkan dependensi provider dan pbp_django_auth untuk mempermudah autentikasi.
+- Pada file main.dart, saya menggunakan Provider untuk menyebarkan instance CookieRequest ke semua widget dalam aplikasi.
+- Halaman utama diubah agar menampilkan halaman login saat aplikasi pertama kali dijalankan.
+- Logout juga diimplementasikan melalui tombol pada menu, yang menghapus sesi pengguna dan mengarahkan kembali ke halaman login.
+
+* ### Membuat model kustom sesuai dengan proyek aplikasi Django dan membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON di Django yang telah kamu deploy.
+
+Aplikasi ini membutuhkan model kustom untuk menyimpan dan memproses data yang diambil dari Django. Model ini dibuat dengan mengonversi JSON dari endpoint Django ke dalam bentuk objek Dart.
+
+Langkah-Langkah:
+
+- Mengakses Data JSON: Saya memanfaatkan endpoint /json/ di Django untuk mendapatkan daftar data barang (shop item) yang sudah difilter sesuai pengguna yang login.
+- Mengonversi JSON ke Objek Dart: Saya menggunakan alat online seperti Quicktype untuk membuat model Dart berdasarkan struktur JSON.
+- Model ini disimpan dalam file lib/models/shop_entry.dart yang mendefinisikan properti seperti name, price, description, dll.
+- Menambahkan Dependensi: Menambahkan izin akses internet di AndroidManifest.xml agar aplikasi dapat berkomunikasi dengan server.
+
+* ### Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item.
+
+Halaman ini menampilkan daftar semua barang yang dimiliki pengguna saat ini. Data diambil dari endpoint /json/ di Django yang sudah difilter berdasarkan user.
+
+- Fungsi fetchShop mengirim permintaan GET ke endpoint /json/ menggunakan CookieRequest. Data JSON yang diterima diubah menjadi objek Dart (ShopEntry).
+- Item yang ditekan menggunakan InkWell akan membuka halaman detail dengan Navigator.push
+- Halaman ShopDetailPage menerima data barang sebagai parameter melalui Navigator.
+- Halaman ini hanya menampilkan informasi seperti nama produk, jumlah, lokasi, harga, dan deskripsi.
+- Tombol back default digunakan untuk kembali ke halaman daftar barang.
+
+* ### Melakukan filter pada halaman daftar item dengan hanya menampilkan item yang terasosiasi dengan pengguna yang login.
+
+Endpoint /json/ di Django sudah dirancang untuk hanya mengembalikan data milik pengguna yang sedang login. Pada Flutter, hanya endpoint ini yang dipanggil, sehingga data yang ditampilkan otomatis sesuai pengguna login.
+
 ## **Jawaban Tugas 9**
 
 * ### Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
